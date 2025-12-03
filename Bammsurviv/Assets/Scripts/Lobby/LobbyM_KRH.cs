@@ -1,16 +1,36 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LobbyM_KRH : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] public GameObject SW;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && SW.activeSelf == true) {
+            onSWOut();
+        }
     }
+    public void onSBClicked(){SW.SetActive(true);}
+    public void onSWOut(){SW.SetActive(false);}
+
+    //lobby to SW
+
+    [System.Serializable] public class WeapData
+    {
+        string name;
+        Sprite img;
+    }
+
+    [SerializeField] public List<WeapData> weaps = new List<WeapData>();
+
+    public void onNextWeap() { }
+    public void onPrevWeap() { }
+
 }
