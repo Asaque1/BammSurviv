@@ -4,35 +4,29 @@ using System.Collections.Generic;
 
 public class Map_BuildingWhites : MonoBehaviour
 {
-    [SerializeField] float fadeDuration = 0.5f;    
+    [SerializeField] SpriteRenderer sr;
+    private void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+    }
+
     
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
-            StartCoroutine(FadeObject(0.2f));
-            Debug.Log("getIn");
-        }
-
+            FadeObject(0.2f);
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
-            StartCoroutine(FadeObject(1f));
-            Debug.Log("getOut");
-        }
+            FadeObject(1f);
     }
 
-    private IEnumerator FadeObject(float targetAlpha)
+    private void FadeObject(float targetAlpha)
     {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr == null) yield break;
             Color color = sr.color;
             color.a = targetAlpha;
             sr.color = color;
-        
-        Debug.Log("Done");
 
     }
 
