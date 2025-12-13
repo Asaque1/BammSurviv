@@ -27,17 +27,7 @@ public class Player_StatData : MonoBehaviour
         Magnet = 1f,
         HPGen = 0.1f,
     };
-    [SerializeField] public Stats player_finalStat = new Stats {
-        MaxHP = 100,
-        MS = 3,
-        Damage = 0f,
-        AMS = 0f,
-        Duration = 0f,
-        AAmount = 0,
-        CDown = 0f,
-        Magnet = 1f,
-        HPGen = 0.1f,
-    };
+    [SerializeField] public Stats player_finalStat = new Stats{};
     void Start()
     {
         
