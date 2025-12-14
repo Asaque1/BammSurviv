@@ -1,27 +1,32 @@
 using UnityEngine;
 
-public class Weapon_Bat : MonoBehaviour, Weapon
+public class Weapon_Bat : MonoBehaviour
 {
-    private float coolTime = 3.5f;
+    [SerializeField] private float coolTime = 3.5f;
+    [SerializeField] public int level=0;
 
-    public string wName = "야구방망이";
-    public float damage = 5f;
-    public string desc => $"매 {cTime}초마다 휘둘러 {damage} 피해를 입힙니다.";
+    [SerializeField] public string wName = "야구방망이";
+    [SerializeField] public float damage = 5f;
+    [SerializeField] public string desc => $"매 {cTime}초마다 휘둘러 {damage} 피해를 입힙니다.";
 
-    public float cTime
+    [SerializeField] public float cTime;
+    [SerializeField] public float now_cTime;
+
+    private void FixedUpdate()
     {
-        get { return coolTime; }
-        set
+        if (now_cTime <= 0)
         {
-            if (value < 0.2f)
-                coolTime = 0.2f;
-            else
-                coolTime = value;
+            Attack();
+            now_cTime = cTime;
+        }
+        else
+        {
+            now_cTime -= Time.deltaTime;
         }
     }
 
-    public void Attack(IDamagable damageable)
+    public void Attack()
     {
-        damageable.GetDamage(damage);
+
     }
 }
