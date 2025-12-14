@@ -4,8 +4,8 @@ public class Weapon_Bat : MonoBehaviour, Weapon
 {
     private float coolTime = 3.5f;
 
-    public string wName { get; set; } = "야구방망이";
-    public float damage { get; set; } = 5f;
+    public string wName = "야구방망이";
+    public float damage = 5f;
     public string desc => $"매 {cTime}초마다 휘둘러 {damage} 피해를 입힙니다.";
 
     public float cTime
@@ -22,6 +22,6 @@ public class Weapon_Bat : MonoBehaviour, Weapon
 
     public void Attack(IDamagable damageable)
     {
-        damageable.GetDamage(Damage);
+        damageable.GetDamage(damage);
     }
 }
