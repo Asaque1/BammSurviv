@@ -1,11 +1,13 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public interface Weapon
 {
-    string name;//name of weapon
-    string desc;//description for when player get this item
+    string wName { get; set; }
+    string desc { get; set; }
 
-    float damage; //base damage for weapon
-    float cTime; //cooltime for use to use time
+    float damage { get; set; }
+    float cTime { get; set; }
+
+    void Attack(IDamagable damageable);
 }

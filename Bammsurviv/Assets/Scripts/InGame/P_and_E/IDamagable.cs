@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public interface IDamagable
 {
-    void GetDamage() { }
+    void GetDamage(float damage) { }
     void Die(UnityEvent die) {
         die.Invoke();
     }

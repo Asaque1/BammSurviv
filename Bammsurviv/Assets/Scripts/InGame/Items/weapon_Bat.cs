@@ -1,15 +1,27 @@
 using UnityEngine;
 
-public class weapon_Bat : Weapon
+public class Weapon_Bat : MonoBehaviour, Weapon
 {
-    void Start()
+    private float coolTime = 3.5f;
+
+    public string wName { get; set; } = "야구방망이";
+    public float damage { get; set; } = 5f;
+    public string desc => $"매 {cTime}초마다 휘둘러 {damage} 피해를 입힙니다.";
+
+    public float cTime
     {
-        
+        get { return coolTime; }
+        set
+        {
+            if (value < 0.2f)
+                coolTime = 0.2f;
+            else
+                coolTime = value;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Attack(IDamagable damageable)
     {
-        
+        damageable.GetDamage(Damage);
     }
 }
