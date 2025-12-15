@@ -34,7 +34,7 @@ public class LobbyM_KRH : MonoBehaviour
             ToNextWeap();
         }
 
-        selectedWeapImg = weaps[weapIndex].img;
+        selectedWeapImg.sprite = weaps[weapIndex].img;
         selectedWeapText.text = weaps[weapIndex].name;
     }
     public void onSBClicked(){SW.SetActive(true);}
@@ -45,7 +45,7 @@ public class LobbyM_KRH : MonoBehaviour
     [System.Serializable] public class WeapData //weapon datas for weapon list
     {
        public string name;
-       public Image img;
+       public Sprite img;
     }
 
     [SerializeField] public List<WeapData> weaps = new List<WeapData>(); //weapon list for choosing start weapon

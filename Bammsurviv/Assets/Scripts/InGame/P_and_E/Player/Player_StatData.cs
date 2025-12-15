@@ -27,15 +27,29 @@ public class Player_StatData : MonoBehaviour
         Magnet = 1f,
         HPGen = 0.1f,
     };
+    [SerializeField] public Stats player_BonusStat = new Stats {
+        MaxHP = 0,
+        MS = 0,
+        Damage = 0f,
+        AMS = 0f,
+        Duration = 0f,
+        AAmount = 0,
+        CDown = 0f,
+        Magnet = 0f,
+        HPGen = 0f,
+    };
     [SerializeField] public Stats player_finalStat = new Stats{};
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        player_finalStat.MaxHP = player_BaseStat.MaxHP + player_BonusStat.MaxHP;
+        player_finalStat.MS = player_BaseStat.MS + player_BonusStat.MS;
+        player_finalStat.Damage = player_BaseStat.Damage + player_BonusStat.Damage;
+        player_finalStat.AMS = player_BaseStat.AMS + player_BonusStat.AMS;
+        player_finalStat.Duration = player_BaseStat.Duration + player_BonusStat.Duration;
+        player_finalStat.AAmount = player_BaseStat.AAmount + player_BonusStat.AAmount;
+        player_finalStat.CDown = player_BaseStat.CDown + player_BonusStat.CDown;
+        player_finalStat.Magnet = player_BaseStat.Magnet + player_BonusStat.Magnet;
+        player_finalStat.HPGen = player_BaseStat.HPGen + player_BonusStat.HPGen;
     }
 }
