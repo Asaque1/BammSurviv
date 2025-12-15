@@ -16,11 +16,11 @@ public class LobbyM_KRH : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame && SW.activeSelf == true) {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && SW.activeSelf) {
             onSWOut();
         }
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame && HT.activeSelf == true)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && HT.activeSelf)
         {
             onHTWOut();
         }

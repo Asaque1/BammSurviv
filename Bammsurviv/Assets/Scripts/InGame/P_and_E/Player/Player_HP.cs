@@ -17,14 +17,8 @@ public class Player_HP : MonoBehaviour, IDamagable
 
     [Header("UImoving")]
     [SerializeField] public Transform playerTransform;
-    [SerializeField] public Vector3 worldOffset;
+    [SerializeField] public Vector3 worldOffset = new Vector3(0,0.7f,0);
     [SerializeField] public Camera cam;
-    [SerializeField] public RectTransform rect;
-
-    void Awake()
-    {
-        rect = GetComponent<RectTransform>();
-    }
     
     void Start()
     {
@@ -36,7 +30,13 @@ public class Player_HP : MonoBehaviour, IDamagable
     {
         nowHP = Mathf.Min(nowHP + pData.player_finalStat.HPGen * Time.fixedDeltaTime, pData.player_finalStat.MaxHP);
         nowHP_UI.fillAmount = nowHP / pData.player_finalStat.MaxHP;
-        
+    }
+
+    void LateUpdate()
+    {
+        Vector3 worldPos = playerTransform.position + worldOffset;
+        Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
+        hp_UI.gameObject.transform.position = screenPos;
     }
 
     void GetDamage(float damage) {

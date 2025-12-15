@@ -10,7 +10,7 @@ public class Player_Movement : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     Vector2 moveVec;
-    private void Awake()
+    private void Start()
     {
         speed = pData.player_BaseStat.MS;
         rigid = GetComponent<Rigidbody2D>();

@@ -40,6 +40,19 @@ public class Player_StatData : MonoBehaviour
     };
     [SerializeField] public Stats player_finalStat = new Stats{};
 
+    void Awake()
+    {
+        player_finalStat.MaxHP = player_BaseStat.MaxHP + player_BonusStat.MaxHP;
+        player_finalStat.MS = player_BaseStat.MS + player_BonusStat.MS;
+        player_finalStat.Damage = player_BaseStat.Damage + player_BonusStat.Damage;
+        player_finalStat.AMS = player_BaseStat.AMS + player_BonusStat.AMS;
+        player_finalStat.Duration = player_BaseStat.Duration + player_BonusStat.Duration;
+        player_finalStat.AAmount = player_BaseStat.AAmount + player_BonusStat.AAmount;
+        player_finalStat.CDown = player_BaseStat.CDown + player_BonusStat.CDown;
+        player_finalStat.Magnet = player_BaseStat.Magnet + player_BonusStat.Magnet;
+        player_finalStat.HPGen = player_BaseStat.HPGen + player_BonusStat.HPGen;
+    }
+
     void Update()
     {
         player_finalStat.MaxHP = player_BaseStat.MaxHP + player_BonusStat.MaxHP;
