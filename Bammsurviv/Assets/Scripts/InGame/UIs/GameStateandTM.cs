@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameStateandTM : MonoBehaviour
 {
@@ -7,7 +8,6 @@ public class GameStateandTM : MonoBehaviour
     public enum playState
     {
         onPlaying,
-        onPaused,
         onGameOver,
         onGameClear,
     }
@@ -17,10 +17,6 @@ public class GameStateandTM : MonoBehaviour
 
     [Header("playState")]
     [SerializeField] playState nowPlayState = playState.onPlaying;
-    [SerializeField] float playTimeSpeed;
-
-    [Header("onGPaused")]
-    [SerializeField] public GameObject gamePauseUI;
 
     [Header("onGOver")]
     [SerializeField] public GameObject gameOverUI;
@@ -32,7 +28,6 @@ public class GameStateandTM : MonoBehaviour
     {
         playSec = 0f;
         nowPlayState = playState.onPlaying;
-        playTimeSpeed = 1f;
         gameOverUI.SetActive(false);
     }
 
@@ -44,25 +39,24 @@ public class GameStateandTM : MonoBehaviour
         if (nowPlayState == playState.onPlaying) Time.timeScale = 1f;
         else Time.timeScale = 0f;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseMenuChange(gamePauseUI.activeSelf); //false at first
+
         if (playSec >= 600f) GameClear();
     }
 
-    void WhenPlayerDie()
+    public void WhenPlayerDie()
     {
         nowPlayState = playState.onGameOver;
         gameOverUI.SetActive(true);
     }
 
-    void PauseMenuChange(bool param) //false at first
-    {
-        gamePauseUI.SetActive(!param); //true at first
-        if (param) nowPlayState = playState.onPlaying;
-        else nowPlayState = playState.onPaused;//work at first
-    }
-
     void GameClear()
     {
+        nowPlayState = playState.onGameClear;
         gameClearUI.SetActive(true);
+    }
+
+    public void GoToLobby()
+    {
+        SceneManager.LoadScene("Lobby");
     }
 }

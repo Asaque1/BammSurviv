@@ -1050,7 +1050,7 @@ MonoBehaviour:
   - name: "\uC57C\uAD6C\uBC29\uB9DD\uC774"
     img: {fileID: -697763020151794088, guid: e314eff4e8356fd40a8358f2008b9298, type: 3}
   - name: "\uAD8C\uCD1D"
-    img: {fileID: 0}
+    img: {fileID: 21300000, guid: f23a202de9d40d34bbe759e9e0793b3e, type: 3}
   - name: "\uC704\uC131\uACF5\uACA9"
     img: {fileID: 21300000, guid: e3f9a319fba6f224d87ed3d927d7d8a9, type: 3}
   - name: "\uC2DD\uCE7C"

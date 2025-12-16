@@ -5,6 +5,10 @@ public class weapon_Bat_attack : MonoBehaviour
     [Header("data")]
     [SerializeField] public float damage;
 
+    public void Init(float getting_Damage)
+    {
+        damage = getting_Damage;
+    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
