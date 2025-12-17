@@ -8,7 +8,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] float speed;
 
     Rigidbody2D rigid;
-    Animator anim;
+    public Animator anim;
     Vector2 moveVec;
     private void Start()
     {
@@ -23,10 +23,17 @@ public class Player_Movement : MonoBehaviour
         speed = pData.player_finalStat.MS;
         this.transform.rotation = Quaternion.identity;
         float x = joystick.Horizontal;
+
+        if (x > 0)
+            this.gameObject.transform.localScale = new Vector3(-1, 1, 1);
+        else if(x<0)
+            this.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            anim.SetBool("IsStopped", true);
         float y = joystick.Vertical;
         moveVec = new Vector2(x, y) * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + moveVec);
         if (moveVec.sqrMagnitude == 0)
+            anim.SetBool("IsStopped",false);
             return;
     }
 }

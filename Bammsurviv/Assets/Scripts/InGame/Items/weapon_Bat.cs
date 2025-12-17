@@ -19,16 +19,17 @@ public class Weapon_Bat : MonoBehaviour
     {
         fCTime = (cTime -(0.1f*level)) * (1-pData.player_finalStat.CDown);
         fDamage = (damage * level)*(1+pData.player_finalStat.Damage);
-
-        if (now_cTime <= 0)
-        {
-            Attack();
-            now_cTime = fCTime;
-        }
-        else
-        {
-            now_cTime -= Time.deltaTime;
-        }
+        
+        if(level >0)
+            if (now_cTime <= 0)
+            {
+                Attack();
+                now_cTime = fCTime;
+            }
+            else
+            {
+                now_cTime -= Time.deltaTime;
+            }
     }
 
     public void Attack()

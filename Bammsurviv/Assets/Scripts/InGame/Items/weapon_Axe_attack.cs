@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class weapon_Axe_attack : MonoBehaviour
@@ -19,8 +20,15 @@ public class weapon_Axe_attack : MonoBehaviour
 
         }
     }
+
     private void Start()
     {
+        
+    }
+
+    public IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(0.8f);
         Destroy(this.gameObject);
     }
 }
