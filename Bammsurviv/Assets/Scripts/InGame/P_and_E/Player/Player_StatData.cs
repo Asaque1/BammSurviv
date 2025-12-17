@@ -42,27 +42,27 @@ public class Player_StatData : MonoBehaviour
 
     void Awake()
     {
-        player_finalStat.MaxHP = player_BaseStat.MaxHP + player_BonusStat.MaxHP;
-        player_finalStat.MS = player_BaseStat.MS + player_BonusStat.MS;
-        player_finalStat.Damage = player_BaseStat.Damage + player_BonusStat.Damage;
-        player_finalStat.AMS = player_BaseStat.AMS + player_BonusStat.AMS;
-        player_finalStat.Duration = player_BaseStat.Duration + player_BonusStat.Duration;
-        player_finalStat.AAmount = player_BaseStat.AAmount + player_BonusStat.AAmount;
-        player_finalStat.CDown = player_BaseStat.CDown + player_BonusStat.CDown;
-        player_finalStat.Magnet = player_BaseStat.Magnet + player_BonusStat.Magnet;
-        player_finalStat.HPGen = player_BaseStat.HPGen + player_BonusStat.HPGen;
+        player_finalStat.MaxHP = player_BaseStat.MaxHP + (20*player_BonusStat.MaxHP);
+        player_finalStat.MS = player_BaseStat.MS + (0.2f*player_BonusStat.MS);
+        player_finalStat.Damage = player_BaseStat.Damage + (0.1f*player_BonusStat.Damage);
+        player_finalStat.AMS = player_BaseStat.AMS + (0.2f*player_BonusStat.AMS);
+        player_finalStat.Duration = player_BaseStat.Duration + (0.25f*player_BonusStat.Duration);
+        player_finalStat.AAmount = player_BaseStat.AAmount + (player_BonusStat.AAmount);
+        player_finalStat.CDown = player_BaseStat.CDown + (0.2f* player_BonusStat.CDown);
+        player_finalStat.Magnet = player_BaseStat.Magnet + (0.2f* player_BonusStat.Magnet);
+        player_finalStat.HPGen = player_BaseStat.HPGen + (0.1f* player_BonusStat.HPGen);
     }
 
     void Update()
     {
-        player_finalStat.MaxHP = player_BaseStat.MaxHP + player_BonusStat.MaxHP;
-        player_finalStat.MS = player_BaseStat.MS + player_BonusStat.MS;
-        player_finalStat.Damage = player_BaseStat.Damage + player_BonusStat.Damage;
-        player_finalStat.AMS = player_BaseStat.AMS + player_BonusStat.AMS;
-        player_finalStat.Duration = player_BaseStat.Duration + player_BonusStat.Duration;
-        player_finalStat.AAmount = player_BaseStat.AAmount + player_BonusStat.AAmount;
-        player_finalStat.CDown = player_BaseStat.CDown + player_BonusStat.CDown;
-        player_finalStat.Magnet = player_BaseStat.Magnet + player_BonusStat.Magnet;
-        player_finalStat.HPGen = player_BaseStat.HPGen + player_BonusStat.HPGen;
+        player_finalStat.MaxHP = player_BaseStat.MaxHP + (20 * player_BonusStat.MaxHP);
+        player_finalStat.MS = player_BaseStat.MS + (0.2f * player_BonusStat.MS);
+        player_finalStat.Damage = player_BaseStat.Damage + (0.1f * player_BonusStat.Damage);
+        player_finalStat.AMS = player_BaseStat.AMS + (0.2f * player_BonusStat.AMS);
+        player_finalStat.Duration = player_BaseStat.Duration + (0.25f * player_BonusStat.Duration);
+        player_finalStat.AAmount = player_BaseStat.AAmount + (player_BonusStat.AAmount);
+        player_finalStat.CDown = player_BaseStat.CDown + (0.2f * player_BonusStat.CDown);
+        player_finalStat.Magnet = player_BaseStat.Magnet + (0.2f * player_BonusStat.Magnet);
+        player_finalStat.HPGen = player_BaseStat.HPGen + (0.1f * player_BonusStat.HPGen);
     }
 }

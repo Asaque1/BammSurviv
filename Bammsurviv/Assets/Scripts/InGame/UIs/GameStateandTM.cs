@@ -8,6 +8,7 @@ public class GameStateandTM : MonoBehaviour
     public enum playState
     {
         onPlaying,
+        onGamePaused,
         onGameOver,
         onGameClear,
     }
@@ -47,6 +48,15 @@ public class GameStateandTM : MonoBehaviour
     {
         nowPlayState = playState.onGameOver;
         gameOverUI.SetActive(true);
+    }
+    public void OnPauseStart()
+    {
+        nowPlayState = playState.onGamePaused;
+    }
+    public void OnPauseEnd()
+    {
+        nowPlayState = playState.onPlaying;
+        Time.timeScale = 1f;
     }
 
     void GameClear()

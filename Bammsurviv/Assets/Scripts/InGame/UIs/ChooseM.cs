@@ -27,6 +27,10 @@ public class ChooseM : MonoBehaviour
 
     private List<Items> selectableList = new List<Items>();
 
+    private void Start()
+    {
+        times = this.gameObject.GetComponent<GameStateandTM>();
+    }
     public void InitialzeSelector()
     {
         selectableList.Clear();
@@ -39,23 +43,41 @@ public class ChooseM : MonoBehaviour
         }
     }
 
-    public int SelectItem()
+    public Items SelectItem()
     {
         if(selectableList.Count == 0)
         {
-            return fallbackItem.itemIndex;
+            return fallbackItem;
         }
 
         int index = Random.Range(0, selectableList.Count);
-        int selectedItem = selectableList[index].itemIndex;
+        Items selectedItem = selectableList[index];
         selectableList.RemoveAt(index);
         return selectedItem;
     }
 
     [Header("chooser")]
-    [SerializeField] public GameObject chooserA;
-    [SerializeField] public GameObject chooserB;
-    [SerializeField] public GameObject chooserC;
+    [SerializeField] public GameObject chooserContainer;
+    [SerializeField] public Chooser chooserA;
+    [SerializeField] public Chooser chooserB;
+    [SerializeField] public Chooser chooserC;
+    GameStateandTM times;
 
+    [ContextMenu("choiceStart")]
+    public void onLevelUp()
+    {
+        times.OnPauseStart();
+        InitialzeSelector();
+        chooserA.GetItem(SelectItem());
+        chooserB.GetItem(SelectItem());
+        chooserC.GetItem(SelectItem());
+        chooserContainer.SetActive(true);
+    }
+
+    public void onChooseEnd(int temp)
+    {
+        times.OnPauseEnd();
+        chooserContainer.SetActive(false);
+    }
 
 }

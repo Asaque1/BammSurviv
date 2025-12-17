@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class Weapon_Bat : MonoBehaviour
+public class Weapon_Axe : MonoBehaviour
 {
     [Header("datas")]
 
     [SerializeField] public int level;
-    [SerializeField] public float damage = 5f;
+    [SerializeField] public float damage = 8f;
     [SerializeField] public float fDamage;
-    [SerializeField] public float cTime = 3.5f;
+    [SerializeField] public float cTime = 4.5f;
     [SerializeField] public float fCTime;
     [SerializeField] private float now_cTime;
 
@@ -34,7 +34,9 @@ public class Weapon_Bat : MonoBehaviour
     public void Attack()
     {
         GameObject clone = Instantiate(attack,this.gameObject.transform.position,new Quaternion(0,0,0,0));
-        weapon_Bat_attack attack_data = clone.GetComponent<weapon_Bat_attack>();
+        weapon_Axe_attack attack_data = clone.GetComponent<weapon_Axe_attack>();
         attack_data.Init(damage);
     }
+
+
 }
