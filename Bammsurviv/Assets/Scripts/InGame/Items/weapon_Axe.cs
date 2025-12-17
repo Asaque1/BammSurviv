@@ -33,35 +33,12 @@ public class Weapon_Axe : MonoBehaviour
             }
 
     }
-    public GameObject GetNearestEnemy()
-    {
-        // 1. 태그로 모든 적 오브젝트를 찾는다
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        GameObject nearestEnemy = null;
-        float shortestDistance = 6f;
-
-        // 2. 하나씩 거리 비교
-        foreach (GameObject enemy in enemies)
-        {
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
-
-            // 3. 가장 가까운 적 갱신
-            if (distance < shortestDistance)
-            {
-                shortestDistance = distance;
-                nearestEnemy = enemy;
-            }
-        }
-
-        return nearestEnemy;
-    }
 
     public void Attack()
     {
         GameObject clone = Instantiate(attack,this.gameObject.transform.position,new Quaternion(0,0,0,0));
         weapon_Axe_attack attack_data = clone.GetComponent<weapon_Axe_attack>();
-        attack_data.Init(damage);
+        attack_data.Init(damage, enemyTracks.Instance.GetNearestEnemyInRange());
     }
 
 

@@ -5,10 +5,12 @@ public class weapon_Axe_attack : MonoBehaviour
 {
     [Header("data")]
     [SerializeField] public float damage;
+    [SerializeField] public Vector3 degreee;
 
-    public void Init(float getting_Damage)
+    public void Init(float getting_Damage, Vector3 degree)
     {
         damage = getting_Damage;
+        degreee = degree;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -23,7 +25,7 @@ public class weapon_Axe_attack : MonoBehaviour
 
     private void Start()
     {
-        
+        this.transform.rotation = Quaternion.Euler(degreee);
     }
 
     public IEnumerator Attack()
