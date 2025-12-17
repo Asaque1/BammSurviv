@@ -312,7 +312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 5454452688900833447, guid: 85ab8cc733d7715478186b0effe2f562, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2450,7 +2450,7 @@ MonoBehaviour:
   onDie:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 747551461}
         m_TargetAssemblyTypeName: GameStateandTM, Assembly-CSharp
         m_MethodName: WhenPlayerDie
         m_Mode: 1
@@ -3643,10 +3643,23 @@ MonoBehaviour:
   nowLevel: 0
   nowExp: 0
   needExp: 0
-  pData: {fileID: 0}
+  pData: {fileID: 748212619}
   onLevelup:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 747551459}
+        m_TargetAssemblyTypeName: ChooseM, Assembly-CSharp
+        m_MethodName: onLevelUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  guageUI: {fileID: 44136730}
 --- !u!1 &1212303991
 GameObject:
   m_ObjectHideFlags: 0
@@ -4215,6 +4228,7 @@ GameObject:
   - component: {fileID: 1397441271}
   - component: {fileID: 1397441270}
   - component: {fileID: 1397441272}
+  - component: {fileID: 1397441273}
   m_Layer: 0
   m_Name: Exp
   m_TagString: Exp
@@ -4332,6 +4346,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.21133333}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
+--- !u!50 &1397441273
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397441269}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1399458201
 GameObject:
   m_ObjectHideFlags: 0
