@@ -32,8 +32,10 @@ public class Player_levels : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Exp"))
+        {
             nowExp += 10;
             Destroy(collision.gameObject);
+        }
     }
 
 }
