@@ -2,57 +2,66 @@ using UnityEngine;
 
 public class enemyTracks : MonoBehaviour
 {
-    public float searchRadius = 5f;
-    public LayerMask enemyLayer;
+    public Transform playerTransform;
+    public Quaternion attackRot;
+    public Transform nearestEnemy;
     public static enemyTracks Instance { get; private set; }
 
     void Awake()
     {
-        // 이미 인스턴스가 있는데, 내가 그게 아니라면
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
-        // 내가 유일한 인스턴스가 됨
         Instance = this;
     }
-    public Vector3 GetNearestEnemyInRange()
+
+    void OnDestroy()
     {
-        // 1. 반경 안의 콜라이더만 수집
-        Collider2D[] hits = Physics2D.OverlapCircleAll(
-            transform.position,
-            searchRadius,
-            enemyLayer
-        );
-
-        GameObject nearestEnemy = null;
-        float shortestDistance = Mathf.Infinity;
-
-        // 2. 수집된 적 중 가장 가까운 적 찾기
-        foreach (Collider2D hit in hits)
+        if (Instance == this)
         {
-            float distance = Vector2.Distance(
-                transform.position,
-                hit.transform.position
-            );
+            Instance = null;
+        }
+    }
 
-            if (distance < shortestDistance)
+    void Update()
+    {
+        nearestEnemy = FindClosestEnemy("Enemy");
+        Vector2 dir;
+
+        if (nearestEnemy != null)
+        {
+            // 적을 향하는 방향
+            dir = (playerTransform.position - nearestEnemy.position).normalized;
+
+        }
+        else
+        {
+            dir = Vector2.right; // 기본 방향
+        }
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        attackRot = Quaternion.Euler(0f, 0f, angle);
+    }
+
+
+    Transform FindClosestEnemy(string tag)
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(tag);
+        Transform closest = null;
+        float distance = Mathf.Infinity;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float currentDistance = Vector2.Distance(playerTransform.position, enemy.transform.position);
+            if (currentDistance < distance)
             {
-                shortestDistance = distance;
-                nearestEnemy = hit.gameObject;
+                distance = currentDistance;
+                closest = enemy.transform;
             }
         }
 
-        Vector3 direction = (nearestEnemy.gameObject.transform.position - this.gameObject.transform.position).normalized;
-        return direction;
+        return closest;
     }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, searchRadius);
-    }
-
 }

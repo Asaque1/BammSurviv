@@ -13,6 +13,21 @@ public class ChooseM : MonoBehaviour
         public int itemIndex;
     }
 
+    public static ChooseM Instance { get; private set; }
+
+    private void Awake()
+    {
+        // 이미 인스턴스가 존재하면 새로 생성된 자신은 제거
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // 싱글톤 인스턴스 할당
+        Instance = this;
+    }
+
     [Header("Max level that can be choosed")]
     [SerializeField] int levelMax;
 
@@ -73,11 +88,21 @@ public class ChooseM : MonoBehaviour
         chooserC.GetItem(SelectItem());
         chooserContainer.SetActive(true);
     }
+    private void OnEnable()
+    {
+        Chooser.OnItemChosen += onChooseEnd;
+    }
 
+    private void OnDisable()
+    {
+        Chooser.OnItemChosen -= onChooseEnd;
+    }
     public void onChooseEnd(int temp)
     {
         times.OnPauseEnd();
         chooserContainer.SetActive(false);
     }
+
+    //public void onBoxOpen(){}
 
 }

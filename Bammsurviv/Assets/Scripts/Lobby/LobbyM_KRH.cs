@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,22 @@ public class LobbyM_KRH : MonoBehaviour
     [SerializeField] public GameObject SW;
     [SerializeField] public GameObject HT;
 
+    public static LobbyM_KRH Instance;
+
+    public int value;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         SW.SetActive(false); HT.SetActive(false);
@@ -16,6 +33,7 @@ public class LobbyM_KRH : MonoBehaviour
 
     private void Update()
     {
+        LobbyM_KRH.Instance.value = weapIndex;
         if (Keyboard.current.escapeKey.wasPressedThisFrame && SW.activeSelf) {
             onSWOut();
         }

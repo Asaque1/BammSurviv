@@ -1,93 +1,159 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Spawn Settings")]
-    [SerializeField] GameObject[] enemyPrefabs;
-
-    [Header("Difficulty Scaling")]
-    public float difficultyInterval = 30f; // 난이도 증가 주기(초)
-    public int spawnIncreaseAmount = 1;    // 증가량
-    public int maxSpawnCount = 20;          // 최대 스폰 수
-
-    public float spawnInterval = 1.5f;
-    public int spawnCount = 5;
-
-    public float minSpawnDistance = 8f;
-    public float maxSpawnDistance = 15f;
-    public int maxTryCount = 10;
-
-    private Transform player;
-    private float timer;
-    private float difficultyTimer;
-
-    void Update()
+    [System.Serializable]
+    public class enemy
     {
-        timer += Time.deltaTime;
-        difficultyTimer += Time.deltaTime;
+        public string name;
+        public int maxHp;
+        public float MS;
+        public int damage;
+        public GameObject prefab;
+        public int weight;
+    }
 
-        // 스폰
-        if (timer >= spawnInterval)
+    [Header("Enemy Data")]
+    [SerializeField] public enemy[] enemyList;
+
+    [Header("Spawn Time")]
+    public float spawnCTime = 2f;
+    public float nowspawnCTime;
+
+    [Header("Spawn Area")]
+    [SerializeField] private Collider2D fieldCollider;
+
+    [Header("Spawn Check")]
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private float checkRadius = 0.3f;
+    [SerializeField] private int maxTryCount = 50;
+
+    [Header("Player Distance Limit")]
+    [SerializeField] private Transform player;
+    [SerializeField] private float minSpawnDistanceFromPlayer = 2.5f;
+
+    [Header("Difficulty Scaling (HP)")]
+    [SerializeField] private float hpIncreaseInterval = 30f;   // 몇 초마다
+    [SerializeField] private float hpMultiplierPerStep = 0.2f; // 단계당 +20%
+    [SerializeField] private float maxHpMultiplier = 5f;       // 최대 배율 제한
+    int step;
+
+    private void Update()
+    {    spawnCTime = 2-(step * hpMultiplierPerStep * 0.25f);
+        if (nowspawnCTime > 0)
         {
-            SpawnEnemies();
-            timer = 0f;
+            nowspawnCTime -= Time.deltaTime;
         }
-
-        if (difficultyTimer >= difficultyInterval)
+        else
         {
-            IncreaseSpawnCount();
-            difficultyTimer = 0f;
-        }
-    }
-    void IncreaseSpawnCount()
-    {
-        spawnCount += spawnIncreaseAmount;
-
-        if (spawnCount > maxSpawnCount)
-            spawnCount = maxSpawnCount;
-    }
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-
-    void SpawnEnemies()
-    {
-        for (int i = 0; i < spawnCount; i++)
-        {
-            Vector2 spawnPos;
-
-            if (TryGetSpawnPosition(out spawnPos))
-            {
-                int index = Random.Range(0, enemyPrefabs.Length);
-                Instantiate(enemyPrefabs[index], spawnPos, Quaternion.identity);
-            }
+            nowspawnCTime = spawnCTime;
+            SpawnEnemy();
         }
     }
 
-    bool TryGetSpawnPosition(out Vector2 result)
+    public void SpawnEnemy()
     {
+        if (enemyList == null || enemyList.Length == 0)
+            return;
+
+        enemy selectedEnemy = GetWeightedRandomEnemy();
+        if (selectedEnemy == null || selectedEnemy.prefab == null)
+            return;
+
         for (int i = 0; i < maxTryCount; i++)
         {
-            Vector2 randomDir = Random.insideUnitCircle.normalized;
+            Vector2 randomPos = GetRandomPositionInField();
 
-            float distance = Random.Range(minSpawnDistance, maxSpawnDistance);
+            bool isBlocked = Physics2D.OverlapCircle(
+                randomPos,
+                checkRadius,
+                obstacleLayer
+            );
 
-            Vector3 candidatePos =
-                player.position + new Vector3(randomDir.x, 0f, randomDir.y) * distance;
+            if (isBlocked)
+                continue;
 
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(candidatePos, out hit, 2f, NavMesh.AllAreas))
-            {
-                result = hit.position;
-                return true;
-            }
+            float distanceToPlayer = Vector2.Distance(
+                randomPos,
+                player.position
+            );
+
+            if (distanceToPlayer < minSpawnDistanceFromPlayer)
+                continue;
+
+            GameObject madeEnemy = Instantiate(
+                selectedEnemy.prefab,
+                randomPos,
+                Quaternion.identity
+            );
+
+            madeEnemy.layer = LayerMask.NameToLayer("Enemy");
+
+            float hpMultiplier = GetCurrentHpMultiplier();
+            int scaledHp = Mathf.RoundToInt(selectedEnemy.maxHp * hpMultiplier);
+
+            Enemy enemyComponent = madeEnemy.GetComponent<Enemy>();
+            enemyComponent.Init(
+                scaledHp,
+                selectedEnemy.damage,
+                selectedEnemy.MS
+            );
+
+            return;
+        }
+    }
+
+    /// <summary>
+    /// field collider bounds 내부에서 랜덤 좌표 반환
+    /// </summary>
+    private Vector2 GetRandomPositionInField()
+    {
+        Bounds bounds = fieldCollider.bounds;
+
+        float x = Random.Range(bounds.min.x, bounds.max.x);
+        float y = Random.Range(bounds.min.y, bounds.max.y);
+
+        return new Vector2(x, y);
+    }
+
+    /// <summary>
+    /// 가중치 기반 적 선택
+    /// </summary>
+    private enemy GetWeightedRandomEnemy()
+    {
+        int totalWeight = 0;
+
+        for (int i = 0; i < enemyList.Length; i++)
+        {
+            totalWeight += enemyList[i].weight;
         }
 
-        result = Vector3.zero;
-        return false;
+        if (totalWeight <= 0)
+            return null;
+
+        int randomValue = Random.Range(0, totalWeight);
+        int currentWeight = 0;
+
+        for (int i = 0; i < enemyList.Length; i++)
+        {
+            currentWeight += enemyList[i].weight;
+
+            if (randomValue < currentWeight)
+                return enemyList[i];
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 시간 경과에 따른 체력 배율 계산
+    /// </summary>
+    private float GetCurrentHpMultiplier()
+    {
+        float elapsedTime = Time.time;
+        step = Mathf.FloorToInt(elapsedTime / hpIncreaseInterval);
+
+        float multiplier = 1f + step * hpMultiplierPerStep;
+        return Mathf.Min(multiplier, maxHpMultiplier);
     }
 }

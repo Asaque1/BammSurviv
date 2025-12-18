@@ -9,6 +9,7 @@ public class Player_levels : MonoBehaviour
     [SerializeField] int nowExp;
     [SerializeField] int needExp;
     [SerializeField] public Player_StatData pData;
+    [SerializeField] public Player_HP pHP;
 
     [Header("event")]
     [SerializeField] public UnityEvent onLevelup;
@@ -21,8 +22,10 @@ public class Player_levels : MonoBehaviour
         if(nowExp >= needExp)
         {
             nowLevel++;
-            nowExp = 0;
-            needExp = 100 + (nowLevel * 15);
+            nowExp -= needExp;
+            needExp = 30 + (nowLevel * 5);
+            Player_Support_anims.Instance.onLevelUp();
+            onLevelup.Invoke();
         }
 
         guageUI.fillAmount = (float)nowExp / needExp;
@@ -35,6 +38,16 @@ public class Player_levels : MonoBehaviour
         {
             nowExp += 10;
             Destroy(collision.gameObject);
+        }
+        else if (collision.CompareTag("Heal"))
+        {
+            pHP.nowHP += 50;
+            Destroy(collision.gameObject);
+            Player_Support_anims.Instance.onHeal();
+        //}else if (collision.CompareTag("Box"))
+        //{
+
+        //    Destroy(collision.gameObject);
         }
     }
 

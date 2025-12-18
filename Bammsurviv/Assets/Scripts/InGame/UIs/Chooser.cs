@@ -1,4 +1,4 @@
-using UnityEditor.Search;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -10,19 +10,19 @@ public class Chooser : MonoBehaviour, IPointerClickHandler
     [SerializeField] public TMPro.TextMeshProUGUI itemName;
     [SerializeField] public TMPro.TextMeshProUGUI itemDesc;
     [SerializeField] public Image itemSprite;
-    [SerializeField] public UnityEvent<int> itemChoosed;
-    public int itemChoosedIndex;
+    public static event Action<int> OnItemChosen;
+    public int itemChosenIndex;
     public void GetItem(ChooseM.Items seledItem)
     {
         itemName.text = seledItem.itemName;
         itemDesc.text = seledItem.itemDesc;
         itemSprite.sprite = seledItem.itemSprite;
-        itemChoosedIndex = seledItem.itemIndex;
+        itemChosenIndex = seledItem.itemIndex;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        itemChoosed.Invoke(itemChoosedIndex);
+        OnItemChosen?.Invoke(itemChosenIndex);
     }
 
 }

@@ -37,7 +37,7 @@ public class GameStateandTM : MonoBehaviour
     {
         playSec += Time.fixedDeltaTime;
         timeText.text = $"{Mathf.FloorToInt(playSec/60)}:{Mathf.FloorToInt(playSec % 60):D2}" ;
-        if (nowPlayState == playState.onPlaying) Time.timeScale = 1f;
+        if (nowPlayState == playState.onPlaying) Time.timeScale = 1.2f;
         else Time.timeScale = 0f;
 
 

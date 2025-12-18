@@ -50,7 +50,7 @@ public class Player_StatData : MonoBehaviour
         player_finalStat.AAmount = player_BaseStat.AAmount + (player_BonusStat.AAmount);
         player_finalStat.CDown = player_BaseStat.CDown + (0.2f* player_BonusStat.CDown);
         player_finalStat.Magnet = player_BaseStat.Magnet + (0.2f* player_BonusStat.Magnet);
-        player_finalStat.HPGen = player_BaseStat.HPGen + (0.1f* player_BonusStat.HPGen);
+        player_finalStat.HPGen = player_BaseStat.HPGen + (1.5f* player_BonusStat.HPGen);
     }
 
     void Update()

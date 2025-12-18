@@ -39,7 +39,7 @@ public class Player_HP : MonoBehaviour, IDamagable
         hp_UI.gameObject.transform.position = screenPos;
     }
 
-    void GetDamage(float damage) {
+    public void GetDamage(float damage) {
         nowHP -= damage;
         if (nowHP <= 0) Die();
     }
